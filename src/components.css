@@ -1,0 +1,28 @@
+.card{
+    position: relative;
+    bottom: 2vh;
+    height: 1vh;
+    width: 10vw;
+}
+.input{
+    width: 9vw;
+    height: 5vh;
+}
+.label{
+    width: 7vw;
+    height: 5vh;
+}
+.dropdown{
+    width: 9vw;
+    height: 5vh;
+}
+
+.card h3, p{
+    position: relative;
+    bottom: 2vh;
+}
+
+.button{
+    width: 7vw;
+    height: 5vh;
+}

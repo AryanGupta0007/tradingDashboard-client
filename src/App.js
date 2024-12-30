@@ -1,25 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import './utils.css'
+import './sections.css'
+import './components.css'
+import {Header} from './sections/Header.js'
+import {Content} from './sections/Content.js'
+import {Table} from './sections/Table.js'
+import {Footer} from './sections/Footer.js'
+import {TableState} from './contexts/TableContext.js'
+import {MarketWatchState} from './contexts/MarketWatchContext.js'
+import {FormState} from './contexts/FormContext.js'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <TableState>
+            <MarketWatchState>
+                <FormState>
+                    <div className="App poppins-regular">
+                        <Header/>
+                        <Table/>
+                        <Content/>
+                        <Footer/>
+                    </div>
+                </FormState>
+            </MarketWatchState>
+        </TableState>
+    )
 }
 
 export default App;

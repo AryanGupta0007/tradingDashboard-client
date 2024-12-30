@@ -1,0 +1,10 @@
+.formSection{
+    margin-left: 2vw;
+    width: 45vw;
+    border: 2px solid blue;
+}
+
+.formCompDiv{
+    width: 15vw;
+    height: 7vh;
+}

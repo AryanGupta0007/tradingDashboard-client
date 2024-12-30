@@ -1,0 +1,33 @@
+.width-100{
+    width: 100%
+}
+.bg-red{
+    background-color: red;
+}
+.bg-grey{
+    background-color: rgba(128, 128, 128, 0.25);
+}
+.bg-blue{
+    background-color: blue;
+}
+.bg-white{
+    background-color: white;
+}
+.bg-aliceblue{
+    background-color: aliceblue;
+}
+.bg-custom-yellow{
+    background-color: #bf2e38;
+}
+.blue{
+    color: blue;
+}
+.custom-yellow{
+    color: #bf2e38;
+}
+
+.poppins-regular {
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-style: normal;
+}
