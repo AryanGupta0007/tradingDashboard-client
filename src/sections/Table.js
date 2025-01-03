@@ -15,10 +15,10 @@ export const Table = () => {
     useEffect(()=>{
       console.log(tableState)
 
-      const response = setInterval(() => {getLtp(tableState)}, 10000)
+      const response = setInterval(() => {getLtp(tableState)}, 2000)
       return () => clearInterval(response)
   }, [tableState])
-    if (tableState?.["SBIN"]?.["exitStatus"]) {
+    if (tableState?.["ADANIENT"]?.["entry"]) {
         return (
             <div className="table-section">
                 <table className="table-auto w-full border-collapse border border-gray-200">

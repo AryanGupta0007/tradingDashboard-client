@@ -6,50 +6,6 @@ export const TableState = (props) => {
     const [symbols, setSymbols] = useState([
   "ADANIENT",
   "ADANIGREEN",
-  "ADANIPORTS",
-  "ASIANPAINT",
-  "AXISBANK",
-  "BAJAJ-AUTO",
-  "BAJFINANCE",
-  "BAJAJFINSV",
-  "BPCL",
-  "BHARTIARTL",
-  "BRITANNIA",
-  "CIPLA",
-  "COALINDIA",
-  "DIVISLAB",
-  "DRREDDY",
-  "EICHERMOT",
-  "GRASIM",
-  "HCLTECH",
-  "HDFCBANK",
-  "HDFCLIFE",
-  "HEROMOTOCO",
-  "HINDALCO",
-  "HINDUNILVR",
-  "ICICIBANK",
-  "INDUSINDBK",
-  "INFY",
-  "ITC",
-  "JSWSTEEL",
-  "KOTAKBANK",
-  "LT",
-  "M&M",
-  "MARUTI",
-  "NTPC",
-  "ONGC",
-  "POWERGRID",
-  "RELIANCE",
-  "SBIN",
-  "SUNPHARMA",
-  "TCS",
-  "TATACONSUM",
-  "TATAMOTORS",
-  "TATASTEEL",
-  "TECHM",
-  "TITAN",
-  "ULTRACEMCO",
-  "UPL",
   "WIPRO"])
     const updateSymbols = (symbol) => {
         const current = [...symbols]
@@ -68,8 +24,9 @@ export const TableState = (props) => {
     }
     const getLtp = async (data) => {
     try {
-        console.log("Fetching data...");
-        const response = await fetch("http://127.0.0.1:5000/ltp", {
+        console.log("Fetching data...")
+        console.log("sending this data ", data)
+        const response = await fetch("http://127.0.0.1:5001/ltp", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -102,19 +59,19 @@ export const TableState = (props) => {
 
     const updateData = async() => {
         const data = {...tableState}
-        symbols.map((e) => {
-
-            // data[e]["ltp"]= getRandomPrice(1000, 200000).toFixed(2)
-            // data[e]["ltp"]= getLtp({symbol: e})
-            // data[e]["entryPrice"]= getRandomPrice(1000, 2000)
-            // data[e]["entryId"] =  randomInt(99999, 100000)
-            // data[e]["orderId"] =  randomInt(99999, 100000)
-            // data[e]["exitOrderId"] =  randomInt(99999, 100000)
-            // data[e]["exitPrice"] =  getRandomPrice(1000, 2000)
-            // data[e]["entryStatus"] =  status[randomInt(2, 0)]
-            // data[e]["exitStatus"] =  status[randomInt(2, 0)]
-        })
-        await setTableState(data)
+        // symbols.map((e) => {
+        //
+        //     // data[e]["ltp"]= getRandomPrice(1000, 200000).toFixed(2)
+        //     // data[e]["ltp"]= getLtp({symbol: e})
+        //     // data[e]["entryPrice"]= getRandomPrice(1000, 2000)
+        //     // data[e]["entryId"] =  randomInt(99999, 100000)
+        //     // data[e]["orderId"] =  randomInt(99999, 100000)
+        //     // data[e]["exitOrderId"] =  randomInt(99999, 100000)
+        //     // data[e]["exitPrice"] =  getRandomPrice(1000, 2000)
+        //     // data[e]["entryStatus"] =  status[randomInt(2, 0)]
+        //     // data[e]["exitStatus"] =  status[randomInt(2, 0)]
+        // })
+        // await setTableState(data)
 
     }
     const generateData = async() => {
@@ -126,14 +83,14 @@ export const TableState = (props) => {
             data[e]["entry"]= getRandomPrice(1000, 200000).toFixed(2)
             data[e]["target"]= getTargetPrice(data[e]["entry"]).toFixed(2)
             data[e]["sl"]= (data[e]["entry"] - 70).toFixed(2)
-            data[e]["ltp"]= getRandomPrice(1000, 2000)
-            data[e]["entryPrice"]= getRandomPrice(1000, 200000)
-            data[e]["entryId"] =  randomInt(9999999999, 1000000000)
-            data[e]["orderId"] =  randomInt(9999999999, 1000000000)
-            data[e]["exitOrderId"] =  randomInt(9999999999, 1000000000)
-            data[e]["exitPrice"] =  getRandomPrice(1000, 200000)
-            data[e]["entryStatus"] =  status[randomInt(2, 0)]
-            data[e]["exitStatus"] =  status[randomInt(2, 0)]
+            data[e]["ltp"] = ""
+            data[e]["entryPrice"] = ""
+            data[e]["entryId"] =   ""
+            data[e]["orderId"] =   ""
+            data[e]["exitOrderId"] =   ""
+            data[e]["exitPrice"]  = ""
+            data[e]["entryStatus"]  = ""
+            data[e]["exitStatus"]  = ""
         })
         await setTableState(data)
     }

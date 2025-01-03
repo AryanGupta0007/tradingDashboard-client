@@ -26,8 +26,8 @@ export const Button = (props) => {
             "entry": data["order_price"] || "",
             "target": data["target"] || "",
             "sl": data["sl"] || "",
-            "entryStatus" :  "PENDING",
-            "exitStatus" :  "PENDING"
+            "entryStatus" :  "",
+            "exitStatus" :  ""
         }
         console.log('data-table', tableData)
         setTableState(tableData)

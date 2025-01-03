@@ -15,7 +15,7 @@ export const FormState = (props) => {
         setFormState({
             "symbol": "",
             "qty": "",
-            "type": "",
+            "type": "BUY",
             "order_price":  "",
             "target": "",
             "sl": ""
