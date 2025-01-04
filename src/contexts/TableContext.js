@@ -3,14 +3,14 @@ import {createContext, useState} from 'react'
 export const TableContext = createContext();
 export const TableState = (props) => {
     const [tableState, setTableState] = useState({})
+    const [requestState, setRequestState] = useState({})
     const [symbols, setSymbols] = useState([
-  "ADANIENT",
-  "ADANIGREEN",
-  "WIPRO"])
+        "ADANIENT",
+        "ADANIGREEN",
+        "WIPRO"])
     const updateSymbols = (symbol) => {
         const current = [...symbols]
-        if (!current.includes(symbol))
-        {
+        if (!current.includes(symbol)) {
             current.push(symbol)
 
         }
@@ -23,29 +23,29 @@ export const TableState = (props) => {
         return price
     }
     const getLtp = async (data) => {
-    try {
-        console.log("Fetching data...")
-        console.log("sending this data ", data)
-        const response = await fetch("http://127.0.0.1:5001/ltp", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        });
+        try {
+            console.log("Fetching data...")
+            console.log("sending this data ", data)
+            const response = await fetch("http://127.0.0.1:5001/ltp", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            console.log("Received response:", result);
+            setTableState(result);
+            return result;
+        } catch (error) {
+            console.error("Error in fetching data:", error);
         }
-
-        const result = await response.json();
-        console.log("Received response:", result);
-        setTableState(result);
-        return result;
-    } catch (error) {
-        console.error("Error in fetching data:", error);
-    }
-};
+    };
 
     const orderTypes = ['BUY', 'SELL']
     const randomInt = (gap, start) => {
@@ -57,7 +57,7 @@ export const TableState = (props) => {
     }
 
 
-    const updateData = async() => {
+    const updateData = async () => {
         const data = {...tableState}
         // symbols.map((e) => {
         //
@@ -74,28 +74,30 @@ export const TableState = (props) => {
         // await setTableState(data)
 
     }
-    const generateData = async() => {
+    const generateData = async () => {
         const data = {}
         symbols.map((e) => {
             data[e] = {}
             data[e]["qty"] = (randomInt(2, 1)) * 25
-            data[e]["orderType" ]= orderTypes[randomInt(1, 0)]
-            data[e]["entry"]= getRandomPrice(1000, 200000).toFixed(2)
-            data[e]["target"]= getTargetPrice(data[e]["entry"]).toFixed(2)
-            data[e]["sl"]= (data[e]["entry"] - 70).toFixed(2)
+            data[e]["orderType"] = orderTypes[randomInt(1, 0)]
+            data[e]["entry"] = getRandomPrice(1000, 200000).toFixed(2)
+            data[e]["target"] = getTargetPrice(data[e]["entry"]).toFixed(2)
+            data[e]["sl"] = (data[e]["entry"] - 70).toFixed(2)
             data[e]["ltp"] = ""
             data[e]["entryPrice"] = ""
-            data[e]["entryId"] =   ""
-            data[e]["orderId"] =   ""
-            data[e]["exitOrderId"] =   ""
-            data[e]["exitPrice"]  = ""
-            data[e]["entryStatus"]  = ""
-            data[e]["exitStatus"]  = ""
+            data[e]["entryId"] = ""
+            data[e]["orderId"] = ""
+            data[e]["exitOrderId"] = ""
+            data[e]["exitPrice"] = ""
+            data[e]["entryStatus"] = ""
+            data[e]["exitStatus"] = ""
         })
         await setTableState(data)
+        await setRequestState(data)
     }
 
-    return <TableContext.Provider value={{tableState, generateData, symbols, updateData, setTableState, updateSymbols, setSymbols, getLtp}}>
+    return <TableContext.Provider
+        value={{tableState, generateData, symbols, updateData, setTableState, updateSymbols, setSymbols, getLtp, requestState, setRequestState}}>
         {props.children}
     </TableContext.Provider>
 }

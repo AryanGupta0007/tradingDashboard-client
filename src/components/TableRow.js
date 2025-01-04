@@ -3,7 +3,7 @@ import {TableContext} from "../contexts/TableContext.js";
 import {FormContext} from "../contexts/FormContext.js";
 
 export const TableRow = (props) => {
-    const {tableState, updateData, symbols, setSymbols, getLtp, setTableState} = useContext(TableContext);
+    const {tableState, updateData, requestState, setRequestState, symbols, setSymbols, getLtp, setTableState} = useContext(TableContext);
     const {editForm, clearForm} = useContext(FormContext);
 
 
@@ -24,12 +24,12 @@ export const TableRow = (props) => {
         console.log("clicked delete")
         const symbol = props.symbol
         console.log(symbol)
-        const currentTableState = {...tableState}
-        console.log("currentTable", currentTableState)
-        delete currentTableState[symbol]
-        console.log("NewcurrentTable", currentTableState)
+        const currentRequestState = {...requestState}
+        console.log("currentTable", currentRequestState)
+        delete currentRequestState[symbol]
+        console.log("NewcurrentTable", currentRequestState)
 
-        await setTableState(currentTableState)
+        await setRequestState(currentRequestState)
         console.log("newTableState ", tableState)
         const currentSymbols = [...symbols]
         const index = currentSymbols.indexOf(symbol)

@@ -3,7 +3,7 @@ import {TableRow} from '../components/TableRow.js';
 import {TableContext} from '../contexts/TableContext.js'
 
 export const Table = () => {
-    const {symbols, tableState, generateData, updateData, getLtp} = useContext(TableContext)
+    const {symbols, tableState, setRequestState, requestState, generateData, updateData, getLtp} = useContext(TableContext)
     useEffect(() => {
         const runFirst = async () => {
             await generateData()
@@ -13,11 +13,15 @@ export const Table = () => {
         // return () => clearInterval(response)
     }, [])
     useEffect(()=>{
-      console.log(tableState)
+        console.log("updatedRequestState", requestState)
+    }, [requestState])
 
-      const response = setInterval(() => {getLtp(tableState)}, 2000)
+    useEffect(()=>{
+      console.log(requestState)
+
+      const response = setInterval(() => {getLtp(requestState)}, 2000)
       return () => clearInterval(response)
-  }, [tableState])
+  }, [requestState])
     if (tableState?.["ADANIENT"]?.["entry"]) {
         return (
             <div className="table-section">

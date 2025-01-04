@@ -4,7 +4,7 @@ import {TableContext} from '../contexts/TableContext.js'
 export const Button = (props) => {
     const { title, type, move, color, marginRight} = props;
     const {formState, clearForm} = useContext(FormContext)
-    const {tableState, setTableState, updateSymbols} = useContext(TableContext)
+    const {tableState, requestState, setRequestState, setTableState, updateSymbols} = useContext(TableContext)
     const onClick = () => {
         if (title === "Order"){
             updateTable()
@@ -30,7 +30,8 @@ export const Button = (props) => {
             "exitStatus" :  ""
         }
         console.log('data-table', tableData)
-        setTableState(tableData)
+        setRequestState(tableData)
+        console.log(requestState)
         clearForm()
         console.log("updated")
     }
