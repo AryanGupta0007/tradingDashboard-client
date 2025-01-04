@@ -39,8 +39,6 @@ export const Button = (props) => {
         clearForm()
         console.log("updated")
     }
-
-
     const getBackgroundColor = () => {
 
         switch (title) {

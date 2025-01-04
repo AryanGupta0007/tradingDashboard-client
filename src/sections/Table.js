@@ -3,25 +3,31 @@ import {TableRow} from '../components/TableRow.js';
 import {TableContext} from '../contexts/TableContext.js'
 
 export const Table = () => {
-    const {symbols, tableState, setRequestState, requestState, generateData, updateData, getLtp} = useContext(TableContext)
-    // useEffect(() => {
-    //     const runFirst = async () => {
-    //         await generateData()
-    //     }
-    //     // const response = setInterval(() => {getLtp(tableState)}, 10000)
-    //     runFirst()
-    //     // return () => clearInterval(response)
-    // }, [])
-    useEffect(()=>{
+    const {
+        symbols,
+        tableState,
+        setRequestState,
+        requestState,
+        generateData,
+        updateData,
+        getLtp
+    } = useContext(TableContext)
+
+    useEffect(() => {
+
         console.log("updatedRequestState", requestState)
+
+
     }, [requestState])
 
-    useEffect(()=>{
-      console.log(requestState)
+    useEffect(() => {
+        console.log(requestState)
 
-      const response = setInterval(() => {getLtp(requestState)}, 2000)
-      return () => clearInterval(response)
-  }, [requestState])
+        const response = setInterval(() => {
+            getLtp(requestState)
+        }, 2000)
+        return () => clearInterval(response)
+    }, [requestState])
     if (tableState?.["ADANIENT"]?.["entry"]) {
         return (
             <div className="table-section">
@@ -46,14 +52,14 @@ export const Table = () => {
                     </thead>
                     <tbody>
                     {symbols.slice().reverse().map((e, index) => (
-                    e !== "undefined" ? <TableRow key={index} symbol={e} /> : null
+                        e !== "undefined" ? <TableRow key={index} symbol={e}/> : null
 
                     ))}
-                </tbody>
-            </table>
-    </div>
-    )
-        ;
+                    </tbody>
+                </table>
+            </div>
+        )
+            ;
     }
     ;
 

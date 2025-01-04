@@ -1,3 +1,5 @@
+// TODO : multiple entries with same symbol
+// TODO: return rows based on tableState
 import React, {useContext, useEffect} from "react";
 import {TableContext} from "../contexts/TableContext.js";
 import {FormContext} from "../contexts/FormContext.js";

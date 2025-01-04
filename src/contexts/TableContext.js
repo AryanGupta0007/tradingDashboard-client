@@ -8,7 +8,8 @@ export const TableState = (props) => {
     const [symbols, setSymbols] = useState([
         "ADANIENT",
         "ADANIGREEN",
-        "WIPRO"])
+        "WIPRO"
+    ])
     const updateSymbols = (symbol) => {
         const current = [...symbols]
         if (!current.includes(symbol)) {
@@ -110,6 +111,7 @@ export const TableState = (props) => {
             data[e]["exitPrice"] = ""
             data[e]["entryStatus"] = ""
             data[e]["exitStatus"] = ""
+            // data[e]["id"] = tableState.keys().length()
         })
         await setTableState(data)
         await setRequestState(data)
