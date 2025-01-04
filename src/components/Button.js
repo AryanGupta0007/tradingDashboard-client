@@ -4,7 +4,7 @@ import {TableContext} from '../contexts/TableContext.js'
 export const Button = (props) => {
     const { title, type, move, color, marginRight} = props;
     const {formState, clearForm} = useContext(FormContext)
-    const {tableState, requestState, setRequestState, setTableState, updateSymbols} = useContext(TableContext)
+    const {tableState, requestState, getSecurityId, setRequestState,  setTableState, updateSymbols, subscribeState, setSubscribeState} = useContext(TableContext)
     const onClick = () => {
         if (title === "Order"){
             updateTable()
@@ -13,25 +13,29 @@ export const Button = (props) => {
             clearForm()
         }
     }
-    const updateTable = () => {
+    useEffect(()=>{
+        console.log("SubscribeState: ", subscribeState)
+    }, [subscribeState])
+    const updateTable = async() => {
         const data = {...formState}
         console.log(formState)
-        const tableData = {...tableState}
-        const keys = Object.keys(data)
-
-        updateSymbols(data["symbol"])
-        tableData[data["symbol"]] = {
+        const subscribeData = {}
+        subscribeData[data["symbol"]] = {
             "qty": data["qty"] || "",
             "orderType": data["type"] || "",
             "entry": data["order_price"] || "",
             "target": data["target"] || "",
             "sl": data["sl"] || "",
+            "ltp": "",
+            "entryId": "",
+            "exitOrderId": "",
+            "entryPrice" :  "",
+            "exitPrice" :  "",
             "entryStatus" :  "",
             "exitStatus" :  ""
         }
-        console.log('data-table', tableData)
-        setRequestState(tableData)
-        console.log(requestState)
+        console.log('data-subscribe', subscribeData)
+        await getSecurityId(subscribeData)
         clearForm()
         console.log("updated")
     }

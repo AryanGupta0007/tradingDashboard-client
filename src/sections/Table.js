@@ -4,14 +4,14 @@ import {TableContext} from '../contexts/TableContext.js'
 
 export const Table = () => {
     const {symbols, tableState, setRequestState, requestState, generateData, updateData, getLtp} = useContext(TableContext)
-    useEffect(() => {
-        const runFirst = async () => {
-            await generateData()
-        }
-        // const response = setInterval(() => {getLtp(tableState)}, 10000)
-        runFirst()
-        // return () => clearInterval(response)
-    }, [])
+    // useEffect(() => {
+    //     const runFirst = async () => {
+    //         await generateData()
+    //     }
+    //     // const response = setInterval(() => {getLtp(tableState)}, 10000)
+    //     runFirst()
+    //     // return () => clearInterval(response)
+    // }, [])
     useEffect(()=>{
         console.log("updatedRequestState", requestState)
     }, [requestState])
