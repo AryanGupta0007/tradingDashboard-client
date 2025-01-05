@@ -31,6 +31,7 @@ export const TableRow = (props) => {
             "order_price": e[props.symbol]["entry"],
             "target": e[props.symbol]["target"],
             "sl": e[props.symbol]["sl"],
+            "securityId": e[props.symbol]["securityId"],
             "id": e[props.symbol]["id"]
         }
 

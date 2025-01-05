@@ -46,7 +46,8 @@ export const Button = (props) => {
                 "exitPrice": "",
                 "entryStatus": "",
                 "exitStatus": "",
-                "id": data["id"]
+                "id": data["id"],
+                "securityId": data["securityId"]
             }
             currentRequestState = currentRequestState.filter((f) => {
                 const key = Object.keys(f)[0]
