@@ -3,7 +3,7 @@ import {createContext, useState} from 'react'
 export const TableContext = createContext();
 export const TableState = (props) => {
     const [tableState, setTableState] = useState({})
-    const [requestState, setRequestState] = useState({})
+    const [requestState, setRequestState] = useState([])
     const [subscribeState, setSubscribeState] = useState({})
     const [symbols, setSymbols] = useState([
         "ADANIENT",
@@ -37,7 +37,7 @@ export const TableState = (props) => {
         let finalResponse = await response.json()
 
         console.log("subscribed ", finalResponse)
-        const newRequestState = {...requestState, ...finalResponse}
+        const newRequestState = [...requestState, finalResponse]
         setRequestState(newRequestState)
         return finalResponse
     }

@@ -1,6 +1,6 @@
-import React, {useEffect, useContext} from 'react';
-import {TableRow} from '../components/TableRow.js';
-import {TableContext} from '../contexts/TableContext.js'
+import React, { useEffect, useContext } from 'react';
+import { TableRow } from '../components/TableRow.js';
+import { TableContext } from '../contexts/TableContext.js';
 
 export const Table = () => {
     const {
@@ -10,57 +10,67 @@ export const Table = () => {
         requestState,
         generateData,
         updateData,
-        getLtp
-    } = useContext(TableContext)
+        getLtp,
+    } = useContext(TableContext);
 
     useEffect(() => {
-
-        console.log("updatedRequestState", requestState)
-
-
-    }, [requestState])
+        console.log('updatedRequestState', requestState);
+    }, [requestState]);
 
     useEffect(() => {
-        console.log(requestState)
+        console.log(requestState);
 
         const response = setInterval(() => {
-            getLtp(requestState)
-        }, 2000)
-        return () => clearInterval(response)
-    }, [requestState])
-    if (tableState?.["ADANIENT"]?.["entry"]) {
+            getLtp(requestState);
+        }, 2000);
+        return () => clearInterval(response);
+    }, [requestState]);
+
+    if (Array.isArray(tableState) && tableState.length >= 1) {
         return (
             <div className="table-section">
                 <table className="table-auto w-full border-collapse border border-gray-200">
-                    <thead style={{color: 'white', backgroundColor: '#313233', position: 'sticky', top: 0, zIndex: 1}}>
-                    <tr>
-                        <th className="px-4 py-2 border-b">SYMBOL</th>
-                        <th className="px-4 py-2 border-b">QTY</th>
-                        <th className="px-4 py-2 border-b">TYPE</th>
-                        <th className="px-4 py-2 border-b">ENTRY</th>
-                        <th className="px-4 py-2 border-b">TARGET</th>
-                        <th className="py-2 border-b">SL</th>
-                        <th className="px-2 py-2 border-b">LTP</th>
-                        <th className="px-6 py-2 border-b">ORDER ID</th>
-                        <th className="px-2 py-2 border-b">ENTRY STATUS</th>
-                        <th className="px-4 py-2 border-b">ENTRY PRICE</th>
-                        <th className="px-4 py-2 border-b">EXIT ORDERID</th>
-                        <th className="px-4 py-2 border-b">EXIT STATUS</th>
-                        <th className="px-4 py-2 border-b">EXIT PRICE</th>
-                        <th className="px-4 py-2 border-b">ACTIONS</th>
-                    </tr>
+                    <thead
+                        style={{
+                            color: 'white',
+                            backgroundColor: '#313233',
+                            position: 'sticky',
+                            top: 0,
+                            zIndex: 1,
+                        }}
+                    >
+                        <tr>
+                            <th className="px-4 py-2 border-b">SYMBOL</th>
+                            <th className="px-4 py-2 border-b">QTY</th>
+                            <th className="px-4 py-2 border-b">TYPE</th>
+                            <th className="px-4 py-2 border-b">ENTRY</th>
+                            <th className="px-4 py-2 border-b">TARGET</th>
+                            <th className="py-2 border-b">SL</th>
+                            <th className="px-2 py-2 border-b">LTP</th>
+                            <th className="px-6 py-2 border-b">ORDER ID</th>
+                            <th className="px-2 py-2 border-b">ENTRY STATUS</th>
+                            <th className="px-4 py-2 border-b">ENTRY PRICE</th>
+                            <th className="px-4 py-2 border-b">EXIT ORDERID</th>
+                            <th className="px-4 py-2 border-b">EXIT STATUS</th>
+                            <th className="px-4 py-2 border-b">EXIT PRICE</th>
+                            <th className="px-4 py-2 border-b">ACTIONS</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {symbols.slice().reverse().map((e, index) => (
-                        e !== "undefined" ? <TableRow key={index} symbol={e}/> : null
-
-                    ))}
+                        {tableState.map((e, index) => {
+                            // Check if e is an object and not empty
+                            if (e && typeof e === 'object' && Object.keys(e).length > 0) {
+                                console.log("e: ", e)
+                                const symbol = Object.keys(e)[0];
+                                return <TableRow key={index} e={e} symbol={symbol} />;
+                            }
+                            return null; // Return null if e is invalid
+                        })}
                     </tbody>
                 </table>
             </div>
-        )
-            ;
+        );
+    } else {
+        return <div>No data available.</div>; // Optionally show a message when tableState is empty or invalid
     }
-    ;
-
-}
+};

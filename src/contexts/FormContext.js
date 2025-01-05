@@ -9,7 +9,9 @@ export const FormState = (props) => {
         setFormState(currentState)
     }
     const editForm = (rowData) => {
+        console.log("editing", rowData)
         setFormState(rowData)
+
     }
     const clearForm = () => {
         setFormState({
@@ -18,7 +20,7 @@ export const FormState = (props) => {
             "type": "BUY",
             "order_price":  "",
             "target": "",
-            "sl": ""
+            "sl": "",
         })
     }
     return <FormContext.Provider value={{formState, updateFormState, editForm, clearForm}}>
