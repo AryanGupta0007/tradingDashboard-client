@@ -12,6 +12,9 @@ export const Header = (props) => {
         return () => clearInterval(run)
     }, [price])
 
+    useEffect(()=>{
+        console.log(price)
+    }, [price])
     // useEffect(() => {
     //     console.log(price)
     // }, [price])

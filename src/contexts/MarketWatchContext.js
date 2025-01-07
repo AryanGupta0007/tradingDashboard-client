@@ -2,8 +2,20 @@ import {createContext, useState} from 'react'
 
 export const MarketWatchContext = createContext()
 export const MarketWatchState = (props) => {
-    const marketWatch = ['NIFTY', 'SENSEX', 'BANKNIFTY', 'BANKEX', 'FINNIFTY', 'MIDCPNIFTY']
+    const marketWatch = ['NIFTY', 'SENSEX', 'BANKNIFTY', 'FINNIFTY', 'MIDCPNIFTY']
     const [price, setPrice] = useState({})
+    const fetchMarketPrice = async () => {
+        const response = await fetch("http://127.0.0.1:5001/index", {
+            method: "GET",
+            headers: {
+                "content-Type": "application/json",
+            }
+        })
+        const finalResponse = await response.json()
+        return finalResponse
+
+
+    }
     const getPriceFontColor = (currentPrice, prevPrice) => {
         prevPrice = parseFloat(prevPrice)
         // console.log(prevPrice)
@@ -13,47 +25,34 @@ export const MarketWatchState = (props) => {
         return "red"
     }
     const getPrice = async (symbol) => {
-    const data = {...price};
-    let currentPrice, prevDayClose, currentDiff, fontColor;
+        const data = {...price};
+        const response = await fetchMarketPrice()
+        let currentPrice, prevDayClose, fontColor;
+        marketWatch.forEach((e) => {
+            if (!data?.[e]?.["price"]) {
+                data[e] = {}
+                data[e]["price"] = response[e]["prevDayClose"]
+            }
+            currentPrice = response[e]["currentValue"];
+            prevDayClose = response[e]["prevDayClose"];
+            if ((parseInt(response[e]["percentageDifference"])) > 0) {
+                fontColor = "green";
+            } else {
+                response[e]["percentageDifference"] *= -1
+                fontColor = "red";
+            }
+            data[e]["percentage"] = response[e]["percentageDifference"].toFixed(2)
+            data[e]["color"] = fontColor;
+            // Use currentPrice instead of prevPrice directly here
+            data[e]["prevPrice"] = data[e]["price"]
+            const localPrevPrice = data[e]["prevPrice"]
+            data[e]["colorPrice"] = getPriceFontColor(currentPrice, localPrevPrice);
 
-    marketWatch.forEach((e) => {
-        if (!data?.[e]?.["price"]) {
-            data[e] = {}
-            data[e]["price"] = 0
-        }
+            data[e]["price"] = currentPrice.toFixed(2);
+        });
 
-        if (e === "BANKNIFTY") {
-            currentPrice = (Math.random() * 5000) + 50000;
-            prevDayClose = 52500;
-        } else if (e === "SENSEX") {
-            currentPrice = (Math.random() * 5000) + 80000;
-            prevDayClose = 82500;
-        } else {
-            currentPrice = (Math.random() * 5000) + 40000;
-            prevDayClose = 42500;
-        }
-
-        if (currentPrice > prevDayClose) {
-            currentDiff = currentPrice - prevDayClose;
-            fontColor = "green";
-        } else {
-            currentDiff = prevDayClose - currentPrice;
-            fontColor = "red";
-        }
-
-        data[e]["percentage"] = ((currentDiff / prevDayClose) * 100).toFixed(2);
-        data[e]["color"] = fontColor;
-
-        // Use currentPrice instead of prevPrice directly here
-        data[e]["prevPrice"] = data[e]["price"]
-        const localPrevPrice = data[e]["prevPrice"]
-        data[e]["colorPrice"] = getPriceFontColor(currentPrice, localPrevPrice);
-
-        data[e]["price"] = currentPrice.toFixed(2);
-    });
-
-    setPrice(data);
-};
+        setPrice(data);
+    };
 
     return (
         <MarketWatchContext.Provider value={{getPrice, price, marketWatch}}>
