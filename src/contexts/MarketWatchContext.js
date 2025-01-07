@@ -35,7 +35,7 @@ export const MarketWatchState = (props) => {
             }
             currentPrice = response[e]["currentValue"];
             prevDayClose = response[e]["prevDayClose"];
-            if ((parseInt(response[e]["percentageDifference"])) > 0) {
+            if ((parseFloat(response[e]["percentageDifference"])) > 0.0001) {
                 fontColor = "green";
             } else {
                 response[e]["percentageDifference"] *= -1
