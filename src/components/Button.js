@@ -46,6 +46,7 @@ export const Button = (props) => {
                 "exitPrice": "",
                 "entryStatus": "",
                 "exitStatus": "",
+                "tradeCount": data["tradeCount"],
                 "id": data["id"],
                 "securityId": data["securityId"]
             }
@@ -87,6 +88,7 @@ export const Button = (props) => {
             "exitPrice": "",
             "entryStatus": "",
             "exitStatus": "",
+            "tradeCount": 0,
             "id": requestState.length + 1
         }
         console.log('data-subscribe', subscribeData)

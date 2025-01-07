@@ -3,6 +3,7 @@ import {createContext, useState} from 'react'
 export const MarketWatchContext = createContext()
 export const MarketWatchState = (props) => {
     const marketWatch = ['NIFTY', 'SENSEX', 'BANKNIFTY', 'BANKEX', 'FINNIFTY', 'MIDCPNIFTY']
+    const [price, setPrice] = useState({})
     const getPriceFontColor = (currentPrice, prevPrice) => {
         prevPrice = parseFloat(prevPrice)
         // console.log(prevPrice)
@@ -11,8 +12,7 @@ export const MarketWatchState = (props) => {
         }
         return "red"
     }
-    const [price, setPrice] = useState({})
-const getPrice = async (symbol) => {
+    const getPrice = async (symbol) => {
     const data = {...price};
     let currentPrice, prevDayClose, currentDiff, fontColor;
 
