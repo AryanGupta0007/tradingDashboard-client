@@ -91,7 +91,7 @@ export const TableRow = (props) => {
                 <td className=" border-b">{e[props.symbol]["target"]}</td>
                 <td className=" border-b px-4">{e[props.symbol]["sl"]}</td>
                 <td className=" border-b">{(e[props.symbol]["ltp"])}</td>
-                <td className=" border-b px-4">{e[props.symbol]["EntryId"]}</td>
+                <td className=" border-b px-4">{e[props.symbol]["entryId"]}</td>
                 <td className=" border-b">{e[props.symbol]["entryStatus"]}</td>
                 <td className=" border-b">{e[props.symbol]["entryPrice"]}</td>
                 <td className=" border-b">{e[props.symbol]["exitOrderId"]}</td>
