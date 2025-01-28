@@ -11,6 +11,7 @@ export const Table = () => {
         generateData,
         updateData,
         getLtp,
+        placeOrder
     } = useContext(TableContext);
 
     useEffect(() => {
@@ -25,6 +26,19 @@ export const Table = () => {
         }, 2000);
         return () => clearInterval(response);
     }, [requestState]);
+
+    useEffect(() => {
+        console.log("ordering", tableState);
+        try{
+        const response = setInterval(() => {
+            placeOrder(tableState);
+        }, 2000);
+        return () => clearInterval(response);
+        }
+        catch(error){
+            console.log(error)
+        }
+    }, [tableState]);
 
     if (Array.isArray(tableState) && tableState.length >= 1) {
         return (

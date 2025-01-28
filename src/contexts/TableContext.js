@@ -4,6 +4,7 @@ export const TableContext = createContext();
 export const TableState = (props) => {
     const [tableState, setTableState] = useState({})
     const [requestState, setRequestState] = useState([])
+    const [orderState, setOrderState] = useState([])
     const [subscribeState, setSubscribeState] = useState({})
     const [symbols, setSymbols] = useState([
         "ADANIENT",
@@ -24,12 +25,31 @@ export const TableState = (props) => {
         const price = Math.round((Math.random() * difference) + start) / 100
         return price
     }
-    const getSecurityId = async(data) => {
+    const placeOrder = async (data) => {
+        try {
+            console.log("orderData ", data)
+            let response = await fetch("http://127.0.0.1:5001/placeOrder", {
+                method: "POST",
+                headers: {
+                    "content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            const finalResponse = await response.json()
+            console.log("subscribed ", finalResponse)
+            const newRequestState = [...requestState, finalResponse]
+            setOrderState(newRequestState)
+            return finalResponse
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const getSecurityId = async (data) => {
         console.log("subscribing ", data)
         let response = await fetch("http://127.0.0.1:5001/getSecurityKey",
             {
                 method: "POST",
-                headers:{
+                headers: {
                     "content-Type": "application/json"
                 },
                 body: JSON.stringify(data)
@@ -118,7 +138,22 @@ export const TableState = (props) => {
     }
 
     return <TableContext.Provider
-        value={{tableState, getSecurityId, generateData, symbols, updateData, setTableState, updateSymbols, setSymbols, getLtp, requestState, setRequestState, subscribeState, setSubscribeState}}>
+        value={{
+            tableState,
+            getSecurityId,
+            generateData,
+            symbols,
+            updateData,
+            setTableState,
+            updateSymbols,
+            placeOrder,
+            setSymbols,
+            getLtp,
+            requestState,
+            setRequestState,
+            subscribeState,
+            setSubscribeState
+        }}>
         {props.children}
     </TableContext.Provider>
 }
