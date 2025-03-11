@@ -5,12 +5,12 @@ import {MarketWatchContext} from '../contexts/MarketWatchContext.js'
 export const Header = (props) => {
     const colors = ["green", "blue", "brown", "black", "green", "blue"]
     const {getPrice, marketWatch, price} = useContext(MarketWatchContext)
-    // useEffect(() => {
-    //     const run = setInterval(() => {
-    //         getPrice()
-    //     }, 1000)
-    //     return () => clearInterval(run)
-    // }, [price])
+    useEffect(() => {
+        const run = setInterval(() => {
+            getPrice()
+        }, 1000)
+        return () => clearInterval(run)
+    }, [price])
 
     useEffect(()=>{
         console.log(price)

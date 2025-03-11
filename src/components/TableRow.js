@@ -92,13 +92,12 @@ export const TableRow = (props) => {
                 <td className=" border-b">{e[props.symbol]["target"]}</td>
                 <td className=" border-b px-4">{e[props.symbol]["sl"]}</td>
                 <td className="border-b">{Array.isArray(ltpState) ? ltpState.find(item => item[props.symbol])?.[props.symbol]?.ltp || "" : ""}</td>
-                <td className="border-b px-4">{Array.isArray(orderState) ? ltpState.find(item => item[props.symbol])?.[props.symbol]?.entryId || "" : ""}</td>
-                <td className="border-b">{Array.isArray(orderState) ? ltpState.find(item => item[props.symbol])?.[props.symbol]?.entryStatus || "" : ""}</td>
-                <td className="border-b">{Array.isArray(orderState) ? ltpState.find(item => item[props.symbol])?.[props.symbol]?.entryPrice || "" : ""}</td>
-                <td className="border-b">{Array.isArray(orderState) ? ltpState.find(item => item[props.symbol])?.[props.symbol]?.exitOrderId || "" : ""}</td>
-                <td className="border-b">{Array.isArray(orderState) ? ltpState.find(item => item[props.symbol])?.[props.symbol]?.exitStatus || "" : ""}</td>
-                <td className="border-b">{Array.isArray(orderState) ? ltpState.find(item => item[props.symbol])?.[props.symbol]?.exitStatus || "" : ""}</td>
-                <td className="border-b">{Array.isArray(orderState) ? ltpState.find(item => item[props.symbol])?.[props.symbol]?.exitPrice || "" : ""}</td>
+                <td className="border-b px-4">{Array.isArray(orderState) ? orderState.find(item => item[props.symbol])?.[props.symbol]?.entryId || "" : ""}</td>
+                <td className="border-b">{Array.isArray(orderState) ? orderState.find(item => item[props.symbol])?.[props.symbol]?.entryStatus || "" : ""}</td>
+                <td className="border-b">{Array.isArray(orderState) ? orderState.find(item => item[props.symbol])?.[props.symbol]?.entryPrice || "" : ""}</td>
+                <td className="border-b">{Array.isArray(orderState) ? orderState.find(item => item[props.symbol])?.[props.symbol]?.exitOrderId || "" : ""}</td>
+                <td className="border-b">{Array.isArray(orderState) ? orderState.find(item => item[props.symbol])?.[props.symbol]?.exitStatus || "" : ""}</td>
+                <td className="border-b">{Array.isArray(orderState) ? orderState.find(item => item[props.symbol])?.[props.symbol]?.exitStatus || "" : ""}</td>
                 <td className=" border-b">
                     <button className="mr-4" title="Edit" onClick={onClickEdit}>
                         <svg xmlns="http://www.w3.org/2000/svg"

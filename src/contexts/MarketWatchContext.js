@@ -54,7 +54,7 @@ export const MarketWatchState = (props) => {
     };
 
     return (
-        <MarketWatchContext.Provider value={{getPrice, price, marketWatch}}>
+        <MarketWatchContext.Provider value={{getPrice, price, marketWatch, setPrice}}>
             {props.children}
         </MarketWatchContext.Provider>
     )

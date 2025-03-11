@@ -1,6 +1,7 @@
 import React, {useEffect, useContext, useRef} from 'react';
 import {TableRow} from '../components/TableRow.js';
 import {TableContext} from '../contexts/TableContext.js';
+import {MarketWatchContext} from '../contexts/MarketWatchContext.js';
 import {socket} from '../socket.js'
 export const Table = () => {
     const {
@@ -18,6 +19,7 @@ export const Table = () => {
         orderState,
         setTableState
     } = useContext(TableContext);
+    const {price, setPrice} = useContext(MarketWatchContext)
     const isLtpStarted = useRef(false);
     useEffect(() => {
         if (!socket.connected) {
@@ -47,6 +49,10 @@ export const Table = () => {
         socket.on('orderExecuted', (data) => {
             console.log("order recieved", data)
             setOrderState(data)
+        })
+        socket.on('indexUpdate', (data) => {
+            console.log('index price fetched', data)
+            setPrice(data)
         })
     
 
