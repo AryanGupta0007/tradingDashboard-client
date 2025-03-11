@@ -38,12 +38,14 @@ export const Table = () => {
             }
         })
         socket.on('ltpUpdate', (data) => {
+            console.log(data)
             console.log("recieLTP", data.ltpState)
             console.log(ltpState)
             setLtpState(data.ltpState);
             // setLtpState(data)
         })
         socket.on('orderExecuted', (data) => {
+            console.log("order recieved", data)
             setOrderState(data)
         })
     
@@ -65,6 +67,10 @@ export const Table = () => {
     useEffect(() => {
         console.log('updatedLtpState', ltpState);
     }, [ltpState]);
+
+    useEffect(() => {
+        console.log('updatedOrderState', orderState);
+    }, [orderState]);
 
 
     // useEffect(() => {

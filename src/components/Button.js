@@ -14,7 +14,6 @@ export const Button = (props) => {
         updateSymbols,
         subscribeState,
         setSubscribeState,
-        socket
     } = useContext(TableContext)
     const onClick = () => {
         if (title === "Order") {
@@ -45,11 +44,15 @@ export const Button = (props) => {
                 "securityId": data["securityId"]
             }
             // get all request states except the one being edited
-            currentRequestState = currentRequestState.filter((f) => {
-                const key = Object.keys(f)[0]
+            const otherRequests = currentRequestState.filter((f) => {
+                const symbol = Object.keys(f)[0]
+                console.log(symbol)
+                const key = f[symbol].id
+                console.log(key)                
                 return parseInt(key) !== parseInt(data['id'])
             })
-            const newRequestState = [...currentRequestState, subscribeData]
+            console.log(otherRequests)
+            const newRequestState = [...otherRequests, subscribeData]
             console.log("edited Request State")
             await setRequestState(newRequestState)
             clearForm()
