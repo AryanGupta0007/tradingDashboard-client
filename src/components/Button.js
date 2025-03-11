@@ -13,7 +13,8 @@ export const Button = (props) => {
         setTableState,
         updateSymbols,
         subscribeState,
-        setSubscribeState
+        setSubscribeState,
+        socket
     } = useContext(TableContext)
     const onClick = () => {
         if (title === "Order") {
@@ -29,9 +30,10 @@ export const Button = (props) => {
     const updateTable = async () => {
         const data = {...formState}
         console.log("ye form aaya h", formState)
+        // it takes place on editing a symbol
         if (data?.["id"]) {
             let currentRequestState = [...requestState]
-            console.log("currentTable", currentRequestState)
+            console.log("currentRequest", currentRequestState)
             const subscribeData = {}
             subscribeData[data["symbol"]] = {
                 "qty": data["qty"] || "",
@@ -39,57 +41,37 @@ export const Button = (props) => {
                 "entry": data["order_price"] || "",
                 "target": data["target"] || "",
                 "sl": data["sl"] || "",
-                "ltp": "",
-                "entryId": "",
-                "exitOrderId": "",
-                "entryPrice": "",
-                "exitPrice": "",
-                "entryStatus": "",
-                "exitStatus": "",
-                "tradeCount": data["tradeCount"],
                 "id": data["id"],
                 "securityId": data["securityId"]
             }
+            // get all request states except the one being edited
             currentRequestState = currentRequestState.filter((f) => {
                 const key = Object.keys(f)[0]
-                const fid = f[key].id
-                console.log('fkey ', fid)
-                return parseInt(fid) !== parseInt(data['id'])
+                return parseInt(key) !== parseInt(data['id'])
             })
-            currentRequestState = [...currentRequestState, subscribeData]
+            const newRequestState = [...currentRequestState, subscribeData]
             console.log("edited Request State")
-            await setRequestState(currentRequestState)
+            await setRequestState(newRequestState)
             clearForm()
             return
 
         }
         const subscribeData = {}
-
-        const id = () => {
-            let arrayLen = tableState.length
-            if (arrayLen > 0) {
-                const lastElement = tableState[arrayLen - 1]
-                const lastKey = Object.keys(lastElement)[0];  // Get the key of the last object
-                const id = lastElement[lastKey].id;
-                return parseInt(id) + 1
-            }
+        let id;
+        if (requestState.length === 0){
+            id = 1;
         }
-
+        else{
+            id = parseInt(Object.keys(requestState[requestState.length-1])[0])
+        }
         subscribeData[data["symbol"]] = {
             "qty": data["qty"] || "",
             "orderType": data["type"] || "",
             "entry": data["order_price"] || "",
             "target": data["target"] || "",
             "sl": data["sl"] || "",
-            "ltp": "",
-            "entryId": "",
-            "exitOrderId": "",
-            "entryPrice": "",
-            "exitPrice": "",
-            "entryStatus": "",
-            "exitStatus": "",
-            "tradeCount": 0,
-            "id": requestState.length + 1
+            "id": id,
+            "securityId": ""
         }
         console.log('data-subscribe', subscribeData)
         await getSecurityId(subscribeData)

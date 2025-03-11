@@ -17,10 +17,12 @@ export const TableRow = (props) => {
         symbols,
         setSymbols,
         getLtp,
-        setTableState
+        setTableState,
+        ltpState,
+        orderState
     } = useContext(TableContext);
     const {editForm, clearForm} = useContext(FormContext);
-    console.log("ew ", props.symbol, e, e[props.symbol]["qty"])
+    // console.log("ew ", props.symbol, e, e[props.symbol]["qty"])
 
     const onClickEdit = () => {
         clearForm()
@@ -41,19 +43,18 @@ export const TableRow = (props) => {
     const onClickDelete = async () => {
         console.log("clicked delete")
         const symbol = props.symbol
-
         console.log(symbol)
-        let currentRequestState = [...requestState]
-        console.log("currentTable", currentRequestState)
-        currentRequestState = currentRequestState.filter((f) => {
+        let currentTableState = [...tableState]
+        console.log("currentTable", currentTableState)
+        currentTableState = currentTableState.filter((f) => {
             const key = Object.keys(f)[0]
             const fid = f[key].id
             console.log('fkey ', fid)
             return parseInt(fid) !== parseInt(id)
         })
-        await setRequestState(currentRequestState)
-        console.log("NewcurrentTable", currentRequestState)
-
+        await setTableState(currentTableState)
+        console.log("NewcurrentTable", currentTableState)
+    
     }
     useEffect(() => {
         console.log("table state updated ", tableState)
@@ -90,13 +91,13 @@ export const TableRow = (props) => {
                 <td className=" border-b">{e[props.symbol]["entry"]}</td>
                 <td className=" border-b">{e[props.symbol]["target"]}</td>
                 <td className=" border-b px-4">{e[props.symbol]["sl"]}</td>
-                <td className=" border-b">{(e[props.symbol]["ltp"])}</td>
-                <td className=" border-b px-4">{e[props.symbol]["entryId"]}</td>
-                <td className=" border-b">{e[props.symbol]["entryStatus"]}</td>
-                <td className=" border-b">{e[props.symbol]["entryPrice"]}</td>
-                <td className=" border-b">{e[props.symbol]["exitOrderId"]}</td>
-                <td className=" border-b">{e[props.symbol]["exitStatus"]}</td>
-                <td className=" border-b">{e[props.symbol]["exitPrice"]}</td>
+                <td className="border-b">{Array.isArray(ltpState) ? ltpState.find(item => item[props.symbol])?.[props.symbol]?.ltp || "" : ""}</td>
+                <td className="border-b px-4">{orderState?.[props.symbol]?.entryId ?? ""}</td>
+                <td className="border-b">{orderState?.[props.symbol]?.entryStatus ?? ""}</td>
+                <td className="border-b">{orderState?.[props.symbol]?.entryPrice ?? ""}</td>
+                <td className="border-b">{orderState?.[props.symbol]?.exitOrderId ?? ""}</td>
+                <td className="border-b">{orderState?.[props.symbol]?.exitStatus ?? ""}</td>
+                <td className="border-b">{orderState?.[props.symbol]?.exitPrice ?? ""}</td>
                 <td className=" border-b">
                     <button className="mr-4" title="Edit" onClick={onClickEdit}>
                         <svg xmlns="http://www.w3.org/2000/svg"

@@ -1,9 +1,10 @@
-import {createContext, useState} from 'react'
+import {createContext, useState, useMemo} from 'react'
 
 export const TableContext = createContext();
 export const TableState = (props) => {
-    const [tableState, setTableState] = useState({})
+    const [tableState, setTableState] = useState([])
     const [requestState, setRequestState] = useState([])
+    const [ltpState, setLtpState] = useState([])
     const [orderState, setOrderState] = useState([])
     const [subscribeState, setSubscribeState] = useState({})
     const [symbols, setSymbols] = useState([
@@ -58,7 +59,14 @@ export const TableState = (props) => {
 
         console.log("subscribed ", finalResponse)
         const newRequestState = [...requestState, finalResponse]
-        setRequestState(newRequestState)
+        await setRequestState(newRequestState)
+        // const newOrderState = [...orderState, orderData]
+        // await setOrderState(newOrderState)
+        // const newLtpState = [...ltpState, ltpData]
+        // await setLtpState(newLtpState)
+        // console.log(",ew", newOrderState, newLtpState)
+        console.log("sjflajsldfjalsjf", requestState, ltpState, orderState)
+
         return finalResponse
     }
 
@@ -148,11 +156,15 @@ export const TableState = (props) => {
             updateSymbols,
             placeOrder,
             setSymbols,
+            ltpState,
+            orderState,
+            setLtpState,
             getLtp,
             requestState,
             setRequestState,
             subscribeState,
-            setSubscribeState
+            setSubscribeState,
+            setOrderState
         }}>
         {props.children}
     </TableContext.Provider>
