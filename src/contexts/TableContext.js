@@ -1,5 +1,5 @@
-import {createContext, useState, useMemo} from 'react'
-
+import { createContext, useState, useMemo } from 'react'
+import { nseSymbols } from '../symbols.js'
 export const TableContext = createContext();
 export const TableState = (props) => {
     const [tableState, setTableState] = useState([])
@@ -7,11 +7,8 @@ export const TableState = (props) => {
     const [ltpState, setLtpState] = useState([])
     const [orderState, setOrderState] = useState([])
     const [subscribeState, setSubscribeState] = useState({})
-    const [symbols, setSymbols] = useState([
-        "ADANIENT",
-        "ADANIGREEN",
-        "WIPRO"
-    ])
+    const [messageState, setMessageState] = useState([])
+    const [symbols, setSymbols] = useState(nseSymbols)
     const updateSymbols = (symbol) => {
         const current = [...symbols]
         if (!current.includes(symbol)) {
@@ -28,7 +25,7 @@ export const TableState = (props) => {
     }
     const placeOrder = async (data) => {
         try {
-            console.log("orderData ", data)
+            // console.log("orderData ", data)
             let response = await fetch("http://127.0.0.1:5001/placeOrder", {
                 method: "POST",
                 headers: {
@@ -37,12 +34,12 @@ export const TableState = (props) => {
                 body: JSON.stringify(data)
             })
             const finalResponse = await response.json()
-            console.log("subscribed ", finalResponse)
+            // console.log("subscribed ", finalResponse)
             const newRequestState = [...requestState, finalResponse]
             setOrderState(newRequestState)
             return finalResponse
         } catch (error) {
-            console.log(error)
+            // console.log(error)
         }
     }
     const getSecurityId = async (data) => {
@@ -65,11 +62,38 @@ export const TableState = (props) => {
         // const newLtpState = [...ltpState, ltpData]
         // await setLtpState(newLtpState)
         // console.log(",ew", newOrderState, newLtpState)
-        console.log("sjflajsldfjalsjf", requestState, ltpState, orderState)
+        // console.log("sjflajsldfjalsjf", requestState, ltpState, orderState)
 
         return finalResponse
     }
-
+    const addMessage = async (data) => {
+        console.log(":heher", data);
+        const requestOptions = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data) // Ensure the body is a JSON string
+        };
+        console.log("Request Options:", requestOptions);
+        const response = await fetch("http://127.0.0.1:5001/add_message", requestOptions);
+        const result = await response.json();
+        console.log("Fsdfds", result);
+        return result;
+    };
+    const getMessages = async () => {
+        const response = await fetch("http://127.0.0.1:5001/messages", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",                
+                
+            }
+        });
+        // console.log(":fhshfoashdf", response)
+        const result = await response.json();
+        setMessageState(result.messages)
+        return result
+    }
     const getLtp = async (data) => {
         try {
             console.log("Fetching data...")
@@ -87,7 +111,7 @@ export const TableState = (props) => {
             }
 
             const result = await response.json();
-            console.log("Received response:", result);
+            // console.log("Received response:", result);
             setTableState(result);
             return result;
         } catch (error) {
@@ -106,7 +130,7 @@ export const TableState = (props) => {
 
 
     const updateData = async () => {
-        const data = {...tableState}
+        const data = { ...tableState }
         // symbols.map((e) => {
         //
         //     // data[e]["ltp"]= getRandomPrice(1000, 200000).toFixed(2)
@@ -164,7 +188,11 @@ export const TableState = (props) => {
             setRequestState,
             subscribeState,
             setSubscribeState,
-            setOrderState
+            setOrderState,
+            messageState,
+            setMessageState,
+            addMessage,
+            getMessages
         }}>
         {props.children}
     </TableContext.Provider>

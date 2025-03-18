@@ -5,6 +5,9 @@ export const FormState = (props) => {
     const updateFormState = (name, value) => {
         const currentState = {...formState}
         console.log('hfskhf', name, value)
+        if (name === "symbol"){
+            value = value.toUpperCase()
+        }
         currentState[name] = value
         setFormState(currentState)
     }

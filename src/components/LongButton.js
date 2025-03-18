@@ -1,5 +1,5 @@
 export const LongButton = (props) => {
-    const { title, type, move, color, marginRight } = props
+    const { title, type, move, color, marginRight, onClick } = props
     const getBackgroundColor = () => {
 
         switch (color) {
@@ -30,7 +30,8 @@ export const LongButton = (props) => {
 
     return (
         <div className="long-button font-[sans-serif]  text-center" >
-            <button type="button" className={buttonClasses} style={{"border-radius": "0",
+            <button type="button" onClick={onClick}
+             className={buttonClasses} style={{"border-radius": "0",
             "width": "100%", height: "100%"}}>
                 {title}
             </button>

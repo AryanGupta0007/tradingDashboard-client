@@ -1,6 +1,8 @@
+import React, {useContext} from 'react'
+import { TableContext } from '../contexts/TableContext';
+
 export const Messages = () => {
-    let messages = [
-        "BUY WIPRO FOR ", "hi", "there", "there", "there", "there", "there", "there", "there"]
+    const {messageState} = useContext(TableContext)
     return (
         <>
             <div
@@ -8,7 +10,7 @@ export const Messages = () => {
                 style={{
                     "margin-left": "2vw",
                     border: "2px solid blue",
-                    height: "15vh",
+                    height: "23vh",
                     overflowY: "auto",
                     overflowX: "hidden",
                     position: "relative",
@@ -20,7 +22,7 @@ export const Messages = () => {
                 </div>
                 <div style={{height: "18vh", marginTop: "2vh"}}>
                     <ul style={{}}>
-                        {messages.slice().reverse().map((e, index) => {
+                        {messageState.slice().reverse().map((e, index) => {
                             return <li key={index}>{e}</li>;
                         })}
                     </ul>

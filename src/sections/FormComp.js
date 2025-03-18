@@ -1,10 +1,17 @@
 import {INPUT} from '../components/INPUT.js'
 import {Label} from '../components/Label.js'
 import {Dropdown} from '../components/Dropdown.js'
+import { DropWithSearch } from '../components/DropWithSearch.js'
 
 export const FormComp = (props) => {
     const {type, title} = props
     const renderComponent = (type) => {
+        if (type == "dropWithSearch"){
+            return (
+                <>
+                    <DropWithSearch name={props.name}/>
+                </>)
+        }
         if (type === "input") {
             return (
                 <>

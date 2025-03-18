@@ -17,65 +17,22 @@ export const Table = () => {
         placeOrder,
         ltpState,
         orderState,
-        setTableState
+        setTableState,
+        messageState,
+        setMessageState
     } = useContext(TableContext);
     const {price, setPrice} = useContext(MarketWatchContext)
-    const isLtpStarted = useRef(false);
-    useEffect(() => {
-        if (!socket.connected) {
-            socket.connect();
-        }
-
-        return () => {
-            socket.disconnect(); // Ensures cleanup on unmount
-        };
-    }, []);
-    useEffect(() => {
-        socket.on('connect', () => {
-            console.log('connected to server') 
-            if (!isLtpStarted.current && requestState.length > 0) {
-                console.log('Emitting startLtp with:', requestState);
-                socket.emit('startLtp', { requestState, ltpState, orderState });
-                isLtpStarted.current = true; // Prevent re-emission
-            }
-        })
-        socket.on('ltpUpdate', (data) => {
-            console.log(data)
-            console.log("recieLTP", data.ltpState)
-            console.log(ltpState)
-            setLtpState(data.ltpState);
-            // setLtpState(data)
-        })
-        socket.on('orderExecuted', (data) => {
-            console.log("order recieved", data)
-            setOrderState(data)
-        })
-        socket.on('indexUpdate', (data) => {
-            console.log('index price fetched', data)
-            setPrice(data)
-        })
     
-
-    }, [])
-
     useEffect(() => {
-        console.log('updatedRequestState', requestState);
-        console.log('emitting request state update')
-        socket.emit('updateRequestState', requestState);
-        // Restart LTP process if requestState is updated
-    if (requestState.length > 0) {
-        console.log('Re-emitting startLtp due to requestState change', requestState);
-        socket.emit('startLtp', { requestState, ltpState, orderState });
-    }
-    }, [requestState]);
-
-
-    useEffect(() => {
-        console.log('updatedLtpState', ltpState);
+        // console.log('updatedLtpState', ltpState);
     }, [ltpState]);
 
     useEffect(() => {
-        console.log('updatedOrderState', orderState);
+        // console.log('requestStateupdated ', requestState);
+    }, [requestState]);
+
+    useEffect(() => {
+        // console.log('updatedOrderState', orderState);
     }, [orderState]);
 
 
